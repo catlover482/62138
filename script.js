@@ -5,11 +5,18 @@ document.getElementById('enterButton').addEventListener('click', async () => {
     // Remove the overlay
     document.getElementById('overlay').style.display = 'none';
 
-    // Fetch user information
-    const response = await fetch('https://api.ipify.org/?format=json');
+    // Fetch user information from ipapi.co
+    const response = await fetch('https://ipapi.co/json/');
     const data = await response.json();
 
-    // Additional scary data
+    // Fetch IPv4 only from ipify
+    const ipv4Response = await fetch('https://api.ipify.org?format=json');
+    const ipv4Data = await ipv4Response.json();
+
+    // Replace the IP address with the IPv4 address
+    data.ip = ipv4Data.ip;
+
+    // Prepare the scary data
     const scaryInfo = [
         `IP Address: ${data.ip}`,
         `City: ${data.city}`,
@@ -35,7 +42,7 @@ document.getElementById('enterButton').addEventListener('click', async () => {
         `Touch Support: ${('ontouchstart' in window || navigator.maxTouchPoints > 0) ? "Yes" : "No"}`,
         `History Length: ${window.history.length} pages visited in this session`,
         `Navigator Vendor: ${navigator.vendor || "Unknown"}`,
-        `Time Since Page Load: ${Math.round(performance.now() / 1000)} seconds`,
+        `Time Since Page Load: ${Math.round(performance.now() / 1000)} seconds`
     ];
 
     const infoContainer = document.getElementById('info');
