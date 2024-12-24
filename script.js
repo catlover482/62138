@@ -6,7 +6,7 @@ document.getElementById('enterButton').addEventListener('click', async () => {
     document.getElementById('overlay').style.display = 'none';
 
     // Fetch user information
-    const response = await fetch('https://ipapi.co/json/');
+    const response = await fetch('https://api.ipify.org/?format=json');
     const data = await response.json();
 
     // Additional scary data
